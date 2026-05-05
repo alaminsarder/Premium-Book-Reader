@@ -1,5 +1,7 @@
 import React, { useState } from 'react';
 import { useLocation, useNavigate } from 'react-router-dom';
+import { db } from '../firebase'; // আপনার firebase.ts ফাইল
+import { collection, addDoc } from 'firebase/firestore'; // Firestore ফাংশন
 
 const Checkout: React.FC = () => {
   const location = useLocation();
@@ -23,27 +25,45 @@ const Checkout: React.FC = () => {
     setFormData(prev => ({ ...prev, [name]: value }));
   };
 
-  const handleSubmit = () => {
+  const handleSubmit = async () => {
+    // ভ্যালিডেশন
     if (!formData.name || !formData.phone || !formData.address || !paymentMethod || !formData.transactionId) {
       alert("দয়া করে সব তথ্য এবং ট্রানজেকশন আইডি প্রদান করুন।");
       return;
     }
     
     setIsProcessing(true);
-    // সিমুলেশন: ১ সেকেন্ড পর প্রসেসিং দেখাবে
-    setTimeout(() => {
+
+    try {
+      // Firebase এ ডাটা সেভ করছি
+      await addDoc(collection(db, "orders"), {
+        customerName: formData.name,
+        phone: formData.phone,
+        address: formData.address,
+        courierAddress: formData.courierAddress,
+        transactionId: formData.transactionId,
+        paymentMethod: paymentMethod,
+        planTitle: plan.title,
+        price: plan.initialPrice,
+        createdAt: new Date().toISOString()
+      });
+
       setIsProcessing(false);
       setIsSubmitted(true);
-    }, 1500);
+    } catch (error) {
+      console.error("Firebase Error: ", error); 
+      alert("অর্ডার সাবমিট করতে সমস্যা হয়েছে! ফায়ারবেস কনসোল চেক করুন।");
+      setIsProcessing(false);
+    }
   };
 
-  if (!plan) return <div className="p-10 text-center">কোনো প্ল্যান পাওয়া যায়নি।</div>;
+  if (!plan) return <div className="p-10 text-center">কোনো প্ল্যান পাওয়া যায়নি। দয়া করে মেম্বারশিপ পেজে ফিরে যান।</div>;
 
   if (isSubmitted) {
     return (
       <div className="min-h-screen flex items-center justify-center p-4">
         <div className="bg-white p-8 rounded-3xl shadow-lg text-center border">
-          <h2 className="text-2xl font-bold text-green-600 mb-4">অর্ডার প্রসেসিং হচ্ছে!</h2>
+          <h2 className="text-2xl font-bold text-green-600 mb-4">অর্ডার সম্পন্ন হয়েছে!</h2>
           <p>আপনার পেমেন্ট রিসিভ হয়েছে। আমরা ২-৪ ঘণ্টার মধ্যে আপনার অর্ডারটি ভেরিফাই করে কনফার্ম করব।</p>
           <button onClick={() => navigate('/')} className="mt-6 bg-gray-900 text-white px-6 py-2 rounded-xl">হোম পেজে ফিরুন</button>
         </div>
