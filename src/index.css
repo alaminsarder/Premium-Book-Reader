@@ -1,16 +1,18 @@
-@import "tailwindcss";
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
 
 @layer base {
   html {
     scroll-behavior: smooth;
   }
-  
+
   body {
     @apply text-gray-900 antialiased;
   }
 }
 
-/* Custom Utilities if needed for old browsers or specific cases */
+/* Utilities */
 .line-clamp-1 {
   display: -webkit-box;
   -webkit-line-clamp: 1;
@@ -24,4 +26,3 @@
   -webkit-box-orient: vertical;
   overflow: hidden;
 }
-
