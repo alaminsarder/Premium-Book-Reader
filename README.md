@@ -1,42 +1,57 @@
+<div align="center">
+
 # 📚 Premium Book Reader
 
-A Bengali/English premium book store and membership website. Visitors can browse books, add them to a cart, order books, and subscribe to monthly reading plans (Golden Reader, Diamond Reader, Islamic Golden, Islamic Diamond). Orders are saved to Firebase Firestore and paid manually via bKash, Nagad or Rocket.
+**A Bengali/English book store and monthly reading membership platform.**
 
-## ✨ Features
+[![Live Demo](https://img.shields.io/badge/Live-Demo-f59e0b?style=for-the-badge)](https://premium-book-reader.vercel.app/)
+[![License: MIT](https://img.shields.io/badge/License-MIT-blue?style=for-the-badge)](LICENSE)
 
-- **Premium home page**: hero section, popular books, membership plans, benefits and call-to-action
-- **Book store**: book cards with cover, category, rating, price in BDT (৳)
-- **Cart**: add to cart, change quantity, remove items, clear cart (saved in the browser's localStorage)
-- **Order Now**: one click adds the book and opens checkout
-- **Checkout for both book orders and membership plans**
-  - Bangladeshi phone number validation
-  - bKash / Nagad / Rocket payment with transaction ID
-  - Order saved to Firestore with a reference number
-- **Membership plans**: 4 plans with registration fee, monthly fee and courier fee
-- **Notice page**: announcements for members
-- **Cover fallback**: if a book image fails to load, a gradient cover with the title is shown
-- **Responsive design** with smooth animations
+![React](https://img.shields.io/badge/React-18-61dafb?logo=react&logoColor=white)
+![TypeScript](https://img.shields.io/badge/TypeScript-5-3178c6?logo=typescript&logoColor=white)
+![Vite](https://img.shields.io/badge/Vite-5-646cff?logo=vite&logoColor=white)
+![Tailwind CSS](https://img.shields.io/badge/Tailwind-3-38bdf8?logo=tailwindcss&logoColor=white)
+![Firebase](https://img.shields.io/badge/Firebase-Firestore-ffca28?logo=firebase&logoColor=black)
 
-## 🛠 Tech Stack
+[Live Demo](https://premium-book-reader.vercel.app/) · [Report a Bug](https://github.com/alaminsarder/Premium-Book-Reader/issues) · [Request a Feature](https://github.com/alaminsarder/Premium-Book-Reader/issues)
+
+</div>
+
+---
+
+## Overview
+
+Premium Book Reader lets visitors browse books, order them through a cart, or subscribe to a monthly reading plan. Orders are stored in Firebase Firestore, and payment is made manually through bKash, Nagad or Rocket and verified by the owner.
+
+🔗 **Live:** [premium-book-reader.vercel.app](https://premium-book-reader.vercel.app/)
+
+## Features
+
+- **Book store** with cover, category, rating and prices in BDT (৳)
+- **Cart** with quantity control, saved in `localStorage`
+- **One-click ordering** with an "Order Now" button
+- **Membership plans:** Golden Reader, Diamond Reader, Islamic Golden, Islamic Diamond
+- **Unified checkout** for both book orders and plan orders
+- **Validation** for Bangladeshi mobile numbers and payment details
+- **Notice board** for member announcements
+- **Resilient images:** a gradient cover is shown if a book image fails to load
+- **Responsive** layout with smooth animations
+
+## Tech Stack
 
 | Area | Technology |
 |---|---|
 | Framework | React + TypeScript |
 | Build tool | Vite 5 |
-| Styling | Tailwind CSS v3 |
-| Animation | framer-motion |
-| Icons | lucide-react |
-| Routing | react-router-dom |
+| Styling | Tailwind CSS 3 |
+| Animation | Framer Motion |
+| Icons | Lucide React |
+| Routing | React Router |
 | Database | Firebase Firestore |
 
-## 🚀 Getting Started
+## Getting Started
 
-### Requirements
-
-- [Node.js](https://nodejs.org) 18 or newer
-- npm (comes with Node.js)
-
-### Install and run
+**Requirements:** [Node.js](https://nodejs.org) 18+ and npm.
 
 ```bash
 git clone https://github.com/alaminsarder/Premium-Book-Reader.git
@@ -45,53 +60,33 @@ npm install
 npm run dev
 ```
 
-Open the address shown in the terminal (usually http://localhost:5173).
+The app runs at `http://localhost:5173`.
 
 ### Other commands
 
-```bash
-npm run build     # create the production build in /dist
-npm run preview   # preview the production build locally
-```
+| Command | Description |
+|---|---|
+| `npm run dev` | Start the development server |
+| `npm run build` | Create a production build in `dist/` |
+| `npm run preview` | Preview the production build locally |
 
-## 📁 Project Structure
+## Project Structure
 
 ```
 src/
-├── components/
-│   ├── BookCard.tsx        # Book card with Add / Order Now buttons
-│   ├── BookCover.tsx       # Cover image with gradient fallback
-│   ├── ErrorBoundary.tsx   # Shows errors on screen instead of a white page
-│   ├── Footer.tsx
-│   ├── Navbar.tsx          # Links + cart icon with item count
-│   └── PageHero.tsx
-├── context/
-│   └── CartContext.tsx     # Cart state (add, remove, quantity, total)
-├── data/
-│   ├── books.ts            # Book list (edit your books here)
-│   ├── membership.ts       # Plans, prices, payment number, FAQ
-│   └── notices.ts          # Notice page content
-├── hooks/
-│   └── useNotices.ts
-├── pages/
-│   ├── Home.tsx
-│   ├── Membership.tsx
-│   ├── BookDetails.tsx
-│   ├── Cart.tsx
-│   ├── Checkout.tsx        # Handles BOTH cart orders and plan orders
-│   └── Notice.tsx
-├── types/index.ts          # Book type
-├── utils/
-│   ├── bn.ts               # Bengali digits and Taka formatting
-│   ├── cn.ts               # className helper
-│   └── format.ts           # formatBDT()
-├── firebase.ts             # Firebase setup
-├── App.tsx                 # Routes
-├── main.tsx                # Entry: BrowserRouter + CartProvider
-└── index.css               # Tailwind + global styles
+├── components/   BookCard, BookCover, Navbar, Footer, PageHero, ErrorBoundary
+├── context/      CartContext (cart state)
+├── data/         books.ts, membership.ts, notices.ts
+├── hooks/        useNotices
+├── pages/        Home, Membership, BookDetails, Cart, Checkout, Notice
+├── types/        Shared TypeScript types
+├── utils/        bn.ts, cn.ts, format.ts
+├── firebase.ts   Firebase configuration
+├── App.tsx       Routes
+└── main.tsx      Entry point (BrowserRouter + CartProvider)
 ```
 
-### Routes
+## Routes
 
 | Path | Page |
 |---|---|
@@ -123,7 +118,7 @@ service cloud.firestore {
 }
 ```
 
-These rules let visitors **create** orders but not read, change or delete them. You can still see all orders in the Firebase Console.
+These rules let visitors create orders but not read, change or delete them. You can still see all orders in the Firebase Console.
 
 4. Put your own Firebase config in `src/firebase.ts`.
 
@@ -154,107 +149,10 @@ planId, planTitle, price
 
 Older plan orders created before the update have no `type` field. They are all plan orders.
 
-## ✏️ How to Customize
+## License
 
-### Add or edit books: `src/data/books.ts`
+Distributed under the **MIT License**. See [LICENSE](LICENSE) for details.
 
-Copy one book block and change the values:
+## Author
 
-```ts
-{
-  id: '9',
-  title: 'Book Title',
-  author: 'Author Name',
-  price: 500,                       // in BDT
-  category: 'Fiction',
-  description: 'Short description',
-  coverImage: '/covers/my-book.jpg',
-  rating: 4.5,
-  reviews: 100,
-  stock: 10,
-  featured: false,
-}
-```
-
-The Home page shows the first 8 books (`books.slice(0, 8)`).
-
-### Book cover images
-
-- **Best option:** put your own images in `public/covers/` and use `coverImage: '/covers/my-book.jpg'`
-- Or use a full image URL (`https://...`)
-- If an image is missing or broken, a gradient cover with the book title is shown automatically
-
-### Change plans and prices: `src/data/membership.ts`
-
-- `PLANS`: each plan has `regFee` (one-time) and `monthlyFee`
-- `COURIER_FEE`: monthly courier charge (also used as the book delivery fee)
-- `PAYMENT_NUMBER`: the bKash/Nagad/Rocket number shown at checkout
-- `FAQ` and `BENEFITS`: text shown on the Membership page
-
-### Book delivery fee: `src/pages/Checkout.tsx`
-
-```ts
-const BOOK_DELIVERY_FEE = COURIER_FEE; // use 0 for free delivery
-```
-
-## 🧾 How Ordering Works
-
-**Book order**
-
-1. Click **Add** (or **Order Now**) on a book
-2. Open the cart from the navbar, then click **অর্ডার করুন**
-3. Fill in name, phone, address, choose bKash/Nagad/Rocket, send money, enter the transaction ID
-4. Submit: the order is saved and the cart is cleared
-
-**Plan order**
-
-1. Open Membership (or the plans on Home) and click a plan's order button
-2. The plan is passed to `/checkout` through router state: `state={{ plan: toCheckoutPlan(p) }}`
-3. Fill in the form and submit
-
-After an order, the owner checks the transaction in the bKash/Nagad/Rocket account, then confirms the order manually (usually within 2-4 hours).
-
-## 🌐 Deployment
-
-Build the project and upload the `dist` folder to any static host (Vercel, Netlify, Firebase Hosting).
-
-```bash
-npm run build
-```
-
-Because the app uses client-side routing, configure a fallback so every path serves `index.html`. On Netlify, add `public/_redirects` with:
-
-```
-/*  /index.html  200
-```
-
-On Vercel, add `vercel.json`:
-
-```json
-{ "rewrites": [{ "source": "/(.*)", "destination": "/index.html" }] }
-```
-
-## 🩺 Troubleshooting
-
-| Problem | Fix |
-|---|---|
-| `'vite' is not recognized` | Run `npm install` first |
-| White screen, "Router inside another Router" | Keep `BrowserRouter` and `CartProvider` only in `main.tsx` |
-| Orders fail with `permission-denied` | Publish the Firestore rules above |
-| Checkout says "nothing to order" | The cart is empty, or the plan button doesn't pass `state` |
-| Book shows a gradient instead of a picture | The link is broken, or the code uses `book.image` instead of `book.coverImage` |
-| Styles missing | This project uses Tailwind **v3**. `index.css` must start with `@tailwind base; @tailwind components; @tailwind utilities;` |
-
-## 📌 Notes
-
-- Firebase web API keys are not secret, but keep the Firestore rules in place. Use a **Private** repo if you prefer.
-- Cart data is stored in the browser (`localStorage`, key `app_cart_v1`).
-- Payment is manual: the app does not process payments automatically.
-
-## 👤 Author
-
-**Al Amin Sarder**: [github.com/alaminsarder](https://github.com/alaminsarder)
-
-## 📄 License
-
-This project is for personal/commercial use by the owner. Add a license file if you want to share it publicly.
+**Al Amin Sarder** · [@alaminsarder](https://github.com/alaminsarder)
