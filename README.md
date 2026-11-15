@@ -25,6 +25,17 @@ Premium Book Reader lets visitors browse books, order them through a cart, or su
 
 🔗 **Live:** [premium-book-reader.vercel.app](https://premium-book-reader.vercel.app/)
 
+<!--
+## Screenshots
+
+![Home](screenshots/home.png)
+![Membership](screenshots/membership.png)
+![Checkout](screenshots/checkout.png)
+
+To show screenshots: put the images in a /screenshots folder,
+then delete the "<!--" line above and the "-->" line below this block.
+-->
+
 ## Features
 
 - **Book store** with cover, category, rating and prices in BDT (৳)
@@ -36,6 +47,22 @@ Premium Book Reader lets visitors browse books, order them through a cart, or su
 - **Notice board** for member announcements
 - **Resilient images:** a gradient cover is shown if a book image fails to load
 - **Responsive** layout with smooth animations
+
+## Membership Plans
+
+| Plan | Registration (one-time) | Monthly | Courier | First payment | From next month |
+|---|---|---|---|---|---|
+| Golden Reader | ৳350 | ৳250 | ৳60 | **৳660** | ৳310 |
+| Diamond Reader | ৳350 | ৳400 | ৳60 | **৳810** | ৳460 |
+| Islamic Golden | ৳250 | ৳400 | ৳60 | **৳710** | ৳460 |
+| Islamic Diamond | ৳250 | ৳500 | ৳60 | **৳810** | ৳560 |
+
+## How It Works
+
+1. **Choose:** add books to the cart, or pick a membership plan.
+2. **Checkout:** enter name, phone and address.
+3. **Pay:** send money by bKash, Nagad or Rocket and enter the transaction ID.
+4. **Confirmation:** the order is saved, and the owner verifies the payment and confirms it within 2-4 hours.
 
 ## Tech Stack
 
@@ -60,7 +87,7 @@ npm install
 npm run dev
 ```
 
-The app runs at `http://localhost:5173`.
+The app runs at `http://localhost:5173`. Firebase is configured in `src/firebase.ts`.
 
 ### Other commands
 
@@ -100,59 +127,42 @@ src/
 
 > **Important:** `BrowserRouter` and `CartProvider` must exist **only once**, in `main.tsx`. Adding them again in `App.tsx` causes the "You cannot render a Router inside another Router" white-screen error.
 
-## 🔥 Firebase Setup
+## Roadmap
 
-1. Go to the [Firebase Console](https://console.firebase.google.com) and open your project.
-2. Open **Firestore** and create a database if you don't have one (choose a location close to Bangladesh, e.g. `asia-south1`).
-3. Open the **Rules** tab, paste the rules below and click **Publish**:
+- [x] Book store with cart and one-click ordering
+- [x] Membership plans and unified checkout
+- [x] Firestore order storage
+- [ ] Admin dashboard to view and confirm orders
+- [ ] Order status tracking for customers
+- [ ] Online payment gateway integration
+- [ ] Book search and category filters
+- [ ] Bengali / English language switch
 
-```
-rules_version = '2';
-service cloud.firestore {
-  match /databases/{database}/documents {
-    match /orders/{orderId} {
-      allow create: if true;
-      allow read, update, delete: if false;
-    }
-  }
-}
-```
+## Contributing
 
-These rules let visitors create orders but not read, change or delete them. You can still see all orders in the Firebase Console.
+Contributions are welcome.
 
-4. Put your own Firebase config in `src/firebase.ts`.
+1. Fork the repository
+2. Create a branch: `git checkout -b feature/your-feature`
+3. Commit your changes: `git commit -m "Add your feature"`
+4. Push the branch: `git push origin feature/your-feature`
+5. Open a Pull Request
 
-> If you create the database in "test mode", the default rules expire after 30 days and new orders fail with `permission-denied`. Always publish the rules above.
+For bugs and ideas, please [open an issue](https://github.com/alaminsarder/Premium-Book-Reader/issues).
 
-### Order data
+## Contact
 
-Every order is saved in the `orders` collection.
-
-**Book order** (`type: "book"`):
-
-```
-customerName, phone, address, courierAddress,
-transactionId, paymentMethod, status: "pending", createdAt,
-type: "book",
-items: [{ id, title, price, quantity }],
-subtotal, deliveryFee, price (total)
-```
-
-**Membership order** (`type: "membership"`):
-
-```
-customerName, phone, address, courierAddress,
-transactionId, paymentMethod, status: "pending", createdAt,
-type: "membership",
-planId, planTitle, price
-```
-
-Older plan orders created before the update have no `type` field. They are all plan orders.
+**Al Amin Sarder**
+GitHub: [@alaminsarder](https://github.com/alaminsarder)
 
 ## License
 
 Distributed under the **MIT License**. See [LICENSE](LICENSE) for details.
 
-## Author
+---
 
-**Al Amin Sarder** · [@alaminsarder](https://github.com/alaminsarder)
+<div align="center">
+
+If you like this project, please give it a ⭐
+
+</div>
